@@ -36,10 +36,8 @@
 
 ## Docker 실행 후
 ```
-ssh -L {LOCAL에서 사용할 포트번호}:{my-private-ec2 프라이빗 IP}:{젠킨스서버 포트번호} -i prod-doosil-nat.pem ec2-user@{my-public-ec2 퍼블릭 IP}
-ssh -L 3355:10.0.100.41:8080 -i prod-doosil-nat.pem ec2-user@3.37.26.22
 # 크롬 열기
-localhost:3355 접속
+{ip}:8080 접속
 젠킨스 initial 비밀번호 입력후, 순서대로 진행
 ```
 
@@ -63,7 +61,7 @@ localhost:3355 접속
    | DOCKER_PASS |  | String Parameter | 도커 패스워드  |
    | AWS_ACCOUNT_ID | 882668563273 | String Parameter | aws ecr id |
    | DOCKER_IMAGE_KEY | build | String Parameter | aws ecr 리포지토리 이름  |
-   | DOCKER_TAG | doosil-cms | String Parameter | 도커 태그 명   |
+   | DOCKER_TAG | java-demo | String Parameter | 도커 태그 명   |
    | TARGET_SVR_USER | ec2-user | String Parameter | 배포할 서버 username  |
    | TARGET_SVR_PATH | /home/ec2-user | String Parameter |  배포할 서버 폴더  |
    | TARGET_SVR | 10.0.30.73 | String Parameter |  배포할 서버 주소   |
@@ -100,7 +98,7 @@ pipeline {
         // CI
         string(name : 'AWS_ACCOUNT_ID', defaultValue : '882668563273', description : 'AWS_ACCOUNT_ID')
         string(name : 'DOCKER_IMAGE_KEY', defaultValue : 'build', description : 'DOCKER_IMAGE_KEY')
-        string(name : 'DOCKER_TAG', defaultValue : 'doosil-common', description : 'DOCKER_TAG')
+        string(name : 'DOCKER_TAG', defaultValue : 'java-demo', description : 'DOCKER_TAG')
 
         // CD
         string(name : 'TARGET_SVR_USER', defaultValue : 'ec2-user', description : 'TARGET_SVR_USER')
@@ -124,7 +122,7 @@ pipeline {
         stage('GIT') {
             steps {
                 echo "GIT Progress"
-                git branch: 'develop', credentialsId: 'git-doo-ssh', url: 'ssh://git@jayutest.best:30001/doodev/doo-api.git'
+                git branch: 'develop', credentialsId: 'git-ssh', url: 'git@github.com:nds-cloud-da/springboot-demo.git'
             }
         }
 
@@ -246,7 +244,7 @@ pipeline {
 1. git 키 설정
 - Jenkins 관리 > Manage Credentials > Stores scoped to Jenkins > Global credentials (unrestricted) > Add Credentials
 - Kind: SSH Username with private key
-- ID: git-doo-ssh
+- ID: git-ssh
 - Description: git-doo-ssh
 - ** Username ** : git
 - Private Key: git에 등록된 키 값
