@@ -47,7 +47,7 @@
 
    | Name           | Value  | Type  | Description  |
    |----------------|--------|--------|--------|
-   | BUILD_APP | common-module | String Parameter  | 빌드 모듈 명 (Spring은 제외) |
+   | BUILD_APP | common-module | String Parameter  | 빌드 모듈 명 (모듈이 없을 시 제외) |
    | ACTIVE_PROFILE | prod / release | String Parameter  | 환경파일 프로필 |
    | RESTART |  | Boolean Parameter  | 재시작  |
    | DEPLOY_BUILD_ID |  | String Parameter | 빌드 아이디 (젠킨스 빌드 번호) |
@@ -245,7 +245,7 @@ pipeline {
 - Jenkins 관리 > Manage Credentials > Stores scoped to Jenkins > Global credentials (unrestricted) > Add Credentials
 - Kind: SSH Username with private key
 - ID: git-ssh
-- Description: git-doo-ssh
+- Description: git-ssh
 - ** Username ** : git
 - Private Key: git에 등록된 키 값
 
